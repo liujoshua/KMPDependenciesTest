@@ -1,0 +1,4 @@
+rootProject.name = 'SharedCode'
+
+
+enableFeaturePreview('GRADLE_METADATA')
