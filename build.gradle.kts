@@ -8,7 +8,7 @@ buildscript {
     }
     dependencies {
         classpath("com.android.tools.build:gradle:3.6.1")
-        classpath(kotlin("gradle-plugin", dev.mobilehealth.reimaginedlamp.build.BuildConfig.kotlinVersion))
+        classpath(kotlin("gradle-plugin", dev.mobilehealth.reimaginedlamp.gradle.BuildConfig.kotlinVersion))
     }
 }
 allprojects {
