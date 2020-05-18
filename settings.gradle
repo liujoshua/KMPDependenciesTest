@@ -1,4 +1,0 @@
-rootProject.name = 'ReimaginedLampMobileApps'
-
-include ':app', ':SharedCode' +
-        ''
