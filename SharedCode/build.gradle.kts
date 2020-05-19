@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import dev.mobilehealth.reimaginedlamp.gradle.BuildConfig
 
 plugins {
     kotlin("multiplatform")
@@ -24,6 +25,9 @@ kotlin {
 
     sourceSets["commonMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
+
+        // MOKO - MVVM
+        api("dev.icerock.moko:mvvm:${BuildConfig.mokkoMvvmVersion}")
     }
 
     sourceSets["commonTest"].dependencies {
