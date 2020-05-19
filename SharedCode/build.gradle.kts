@@ -13,8 +13,7 @@ android {
         minSdkVersion(21)
         targetSdkVersion(28)
     }
-
-
+    
     sourceSets {
         getByName("main") {
             manifest.srcFile("src/androidMain/AndroidManifest.xml")
@@ -64,15 +63,6 @@ kotlin {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
 
-                // cryptography
-                api("com.soywiz.korlibs.krypto:krypto:${BuildConfig.kryptoVersion}")
-
-                // UUID
-                api("com.benasher44:uuid:${BuildConfig.benasherUuidVersion}")
-
-                // KTOR
-//                implementation("io.ktor:ktor-client-core:${BuildConfig.ktorVersion}")
-                // TIME
                 implementation("io.islandtime:core:${BuildConfig.islandTimeVersion}")
 
             }
