@@ -54,7 +54,7 @@ kotlin {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
 
                 // cryptography
-//                api("com.soywiz.korlibs.krypto:krypto:${BuildConfig.kryptoVersion}")
+                api("com.soywiz.korlibs.krypto:krypto:${BuildConfig.kryptoVersion}")
 
                 // UUID
                 api("com.benasher44:uuid:${BuildConfig.benasherUuidVersion}")

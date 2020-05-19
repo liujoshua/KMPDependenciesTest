@@ -15,6 +15,6 @@ object BuildConfig {
 
     val benasherUuidVersion = "0.1.0"
 
-//    val kryptoVersion = "1.11.1"
+    val kryptoVersion = "1.11.1"
 
 }
