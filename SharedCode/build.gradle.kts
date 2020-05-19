@@ -3,6 +3,7 @@ import dev.mobilehealth.reimaginedlamp.gradle.BuildConfig
 
 plugins {
     kotlin("multiplatform")
+    id("com.squareup.sqldelight")
 }
 
 kotlin {
@@ -35,6 +36,11 @@ kotlin {
 
     sourceSets["androidMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
+
+        // SQL Delight
+        implementation("com.squareup.sqldelight:android-driver:${BuildConfig.sqldelightVersion}")
+        implementation("com.squareup.sqldelight:sqlite-driver:${BuildConfig.sqldelightVersion}")
+
     }
 
     sourceSets["androidTest"].dependencies {
@@ -44,6 +50,9 @@ kotlin {
 
     sourceSets["iosMain"].dependencies {
         api("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.20.0")
+        // SQL Delight
+        implementation("com.squareup.sqldelight:native-driver:${BuildConfig.sqldelightVersion}")
+
     }
 }
 
