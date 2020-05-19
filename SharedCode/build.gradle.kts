@@ -26,6 +26,9 @@ kotlin {
     sourceSets["commonMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
 
+        implementation("co.touchlab:firestore:${BuildConfig.firebaseKmpVersion}")
+        implementation("com.google.firebase:firebase-firestore:${BuildConfig.firebaseFirestoreVersion}")
+        implementation("com.google.firebase:firebase-core:17.0.1${BuildConfig.firebaseCoreVersion}")
     }
 
     sourceSets["commonTest"].dependencies {
