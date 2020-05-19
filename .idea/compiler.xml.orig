@@ -2,8 +2,11 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.8">
-      <module name="SharedCode.androidMain~1" target="1.6" />
-      <module name="SharedCode.androidTest~1" target="1.6" />
+<<<<<<< HEAD
+=======
+      <module name="SharedCode.androidMain" target="1.6" />
+      <module name="SharedCode.androidTest" target="1.6" />
+>>>>>>> ktor
       <module name="SharedCode.jvmMain" target="1.6" />
       <module name="SharedCode.jvmMain~1" target="1.6" />
       <module name="SharedCode.jvmTest" target="1.6" />

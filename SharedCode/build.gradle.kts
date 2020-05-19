@@ -2,10 +2,37 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import dev.mobilehealth.reimaginedlamp.gradle.BuildConfig
 
 plugins {
+    id("com.android.library")
     kotlin("multiplatform")
 }
 
+android {
+    compileSdkVersion(28)
+
+    defaultConfig {
+        minSdkVersion(21)
+        targetSdkVersion(28)
+    }
+
+
+    sourceSets {
+        getByName("main") {
+            manifest.srcFile("src/androidMain/AndroidManifest.xml")
+        }
+    }
+
+}
+
 kotlin {
+    targets {
+        android("android") {
+            publishLibraryVariants("release", "debug")
+        }
+
+//        jvm("android")
+//        jvm()
+//        fromPreset(presets.android, "android")
+    }
     //select iOS target platform depending on the Xcode environment variables
     val iOSTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
         if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
@@ -21,11 +48,9 @@ kotlin {
         }
     }
 
-    jvm("android")
-
     sourceSets["commonMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
-
+        implementation("com.github.aakira:napier:${BuildConfig.napierVersion}")
     }
 
     sourceSets["commonTest"].dependencies {
@@ -35,6 +60,7 @@ kotlin {
 
     sourceSets["androidMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
+        implementation("com.github.aakira:napier-android:${BuildConfig.napierVersion}")
     }
 
     sourceSets["androidTest"].dependencies {
@@ -44,6 +70,7 @@ kotlin {
 
     sourceSets["iosMain"].dependencies {
         api("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.20.0")
+        implementation("com.github.aakira:napier-ios:${BuildConfig.napierVersion}")
     }
 }
 
