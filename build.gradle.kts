@@ -11,11 +11,11 @@ buildscript {
 
 
         classpath(
-            "com.squareup.sqldelight:gradle-plugin",
+            "com.squareup.sqldelight", "gradle-plugin",
             dev.mobilehealth.reimaginedlamp.gradle.BuildConfig.sqldelightVersion
         )
         classpath(
-            "com.squareup.sqldelight:runtime",
+            "com.squareup.sqldelight", "runtime",
             dev.mobilehealth.reimaginedlamp.gradle.BuildConfig.sqldelightVersion
         )
 
