@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import dev.mobilehealth.reimaginedlamp.gradle.BuildConfig
 
 plugins {
     kotlin("multiplatform")
@@ -44,7 +45,7 @@ kotlin {
     }
 
     sourceSets["iosMain"].dependencies {
-        api( "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.20.0")
+        api("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.20.0")
     }
 }
 
@@ -67,10 +68,12 @@ val packForXcode by tasks.creating(Sync::class) {
     /// generate a helpful ./gradlew wrapper with embedded Java path
     doLast {
         val gradlew = File(targetDir, "gradlew")
-        gradlew.writeText("#!/bin/bash\n"
-                + "export 'JAVA_HOME=${System.getProperty("java.home")}'\n"
-                + "cd '${rootProject.rootDir}'\n"
-                + "./gradlew \$@\n")
+        gradlew.writeText(
+            "#!/bin/bash\n"
+                    + "export 'JAVA_HOME=${System.getProperty("java.home")}'\n"
+                    + "cd '${rootProject.rootDir}'\n"
+                    + "./gradlew \$@\n"
+        )
         gradlew.setExecutable(true)
     }
 }
