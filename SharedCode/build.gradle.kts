@@ -63,8 +63,9 @@ kotlin {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
 
-                implementation("io.islandtime:core:${BuildConfig.islandTimeVersion}")
-
+                implementation("com.soywiz.korlibs.krypto:krypto:${BuildConfig.kryptoVersion}")
+                api("com.benasher44:uuid:${BuildConfig.benasherUuidVersion}")
+                implementation("com.soywiz.korlibs.klock:klock:${BuildConfig.klockVersion}")
             }
         }
     }
