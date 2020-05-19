@@ -26,6 +26,8 @@ kotlin {
     sourceSets["commonMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
 
+        // KTOR
+        implementation("io.ktor:ktor-client-core:${BuildConfig.ktorVersion}")
     }
 
     sourceSets["commonTest"].dependencies {
@@ -35,6 +37,9 @@ kotlin {
 
     sourceSets["androidMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
+
+        // KTOR
+        implementation("io.ktor:ktor-client-android:${BuildConfig.ktorVersion}")
     }
 
     sourceSets["androidTest"].dependencies {
@@ -44,6 +49,9 @@ kotlin {
 
     sourceSets["iosMain"].dependencies {
         api("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.20.0")
+
+        // KTOR
+        implementation("io.ktor:ktor-client-ios:${BuildConfig.ktorVersion}")
     }
 }
 
