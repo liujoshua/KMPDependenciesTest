@@ -8,5 +8,13 @@ object BuildConfig {
     val buildToolsVersion = "28.0.3"
     val kotlinVersion = "1.3.71"
 
+
     val ktorVersion = "1.3.2"
+
+    val islandTimeVersion = "0.2.0"
+
+    val benasherUuidVersion = "0.1.0"
+
+    val kryptoVersion = "1.11.1"
+
 }
