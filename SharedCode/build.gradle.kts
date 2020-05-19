@@ -20,7 +20,7 @@ kotlin {
         }
     }
 
-    jvm()
+    jvm("android")
 
     sourceSets["commonMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
@@ -31,11 +31,11 @@ kotlin {
         implementation(kotlin("test-annotations-common"))
     }
 
-    sourceSets["jvmMain"].dependencies {
+    sourceSets["androidMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
     }
 
-    sourceSets["jvmTest"].dependencies {
+    sourceSets["androidTest"].dependencies {
         implementation(kotlin("test"))
         implementation(kotlin("test-junit"))
     }
