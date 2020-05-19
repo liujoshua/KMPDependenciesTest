@@ -6,8 +6,6 @@ import io.islandtime.Instant
 import io.islandtime.ZonedDateTime
 import io.islandtime.ranges.InstantInterval
 import io.islandtime.toInstant
-import io.ktor.utils.io.core.toByteArray
-
 
 data class DailyHealth(val combinedNonce: String, val ok: Boolean, val timestamp: ZonedDateTime) {
     fun toDocumentMap(): Any {
@@ -19,9 +17,10 @@ data class DailyHealth(val combinedNonce: String, val ok: Boolean, val timestamp
     }
 
     companion object {
+        @ExperimentalStdlibApi
         fun create(sharedNonce: Uuid, userNonce: Uuid, ok: Boolean, timestamp: ZonedDateTime): DailyHealth {
             return DailyHealth(
-                "$sharedNonce|$userNonce".toByteArray().sha256().base64,
+                "$sharedNonce|$userNonce".encodeToByteArray().sha256().base64,
                 ok,
                 timestamp
             )

@@ -60,7 +60,7 @@ kotlin {
                 api("com.benasher44:uuid:${BuildConfig.benasherUuidVersion}")
 
                 // KTOR
-                implementation("io.ktor:ktor-client-core:${BuildConfig.ktorVersion}")
+//                implementation("io.ktor:ktor-client-core:${BuildConfig.ktorVersion}")
                 // TIME
                 implementation("io.islandtime:core:${BuildConfig.islandTimeVersion}")
 
