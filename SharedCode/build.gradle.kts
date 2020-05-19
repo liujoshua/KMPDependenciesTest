@@ -27,7 +27,7 @@ kotlin {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
 
         // LOCATION
-        api("dev.icerock.moko:geo:${BuildConfig.geoVersion})
+        api("dev.icerock.moko:geo:${BuildConfig.geoVersion}")
     }
 
     sourceSets["commonTest"].dependencies {
