@@ -11,7 +11,8 @@ object BuildConfig {
 
 //    val ktorVersion = "1.3.2"
 
-//    val islandTimeVersion = "0.2.0"
+    //    val islandTimeVersion = "0.2.0"
+    val klockVersion = "1.9.1"
 
     val benasherUuidVersion = "0.1.0"
 

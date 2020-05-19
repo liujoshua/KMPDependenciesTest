@@ -53,6 +53,7 @@ kotlin {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
 
+                implementation("com.soywiz.korlibs.klock:klock:${BuildConfig.klockVersion}")
                 // cryptography
 //                api("com.soywiz.korlibs.krypto:krypto:${BuildConfig.kryptoVersion}")
 
