@@ -8,4 +8,5 @@ object BuildConfig {
     val buildToolsVersion = "28.0.3"
     val kotlinVersion = "1.3.71"
 
+    val geoVersion = "0.2.0"
 }
