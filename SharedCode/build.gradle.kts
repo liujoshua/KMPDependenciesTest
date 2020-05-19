@@ -1,9 +1,9 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import dev.mobilehealth.reimaginedlamp.gradle.BuildConfig
-
 plugins {
     id("com.android.library")
     kotlin("multiplatform")
+    id("kotlinx-atomicfu")
 }
 
 android {
