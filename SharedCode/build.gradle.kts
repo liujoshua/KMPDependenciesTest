@@ -1,44 +1,48 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import dev.mobilehealth.reimaginedlamp.gradle.BuildConfig
 plugins {
-    id("com.android.library")
+//    id("com.android.library")
     kotlin("multiplatform")
-    id("kotlinx-atomicfu")
 }
+apply(plugin = "kotlinx-atomicfu")
 
-android {
-    compileSdkVersion(28)
-
-    defaultConfig {
-        minSdkVersion(21)
-        targetSdkVersion(28)
-    }
-
-
-    sourceSets {
-        getByName("main") {
-            manifest.srcFile("src/androidMain/AndroidManifest.xml")
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().all {
-
-        kotlinOptions {
-            jvmTarget = "1.8"
-        }
-    }
-}
+//android {
+//    compileSdkVersion(28)
+//
+//    defaultConfig {
+//        minSdkVersion(21)
+//        targetSdkVersion(28)
+//    }
+//
+//
+//    sourceSets {
+//        getByName("main") {
+//            manifest.srcFile("src/androidMain/AndroidManifest.xml")
+//        }
+//    }
+//
+//    compileOptions {
+//        sourceCompatibility = JavaVersion.VERSION_1_8
+//        targetCompatibility = JavaVersion.VERSION_1_8
+//    }
+//
+//    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().all {
+//
+//        kotlinOptions {
+//            jvmTarget = "1.8"
+//        }
+//    }
+//}
 kotlin {
 
+    jvm {
+        withJava()
+    }
     targets {
-        android("android") {
-            publishLibraryVariants("release", "debug")
-        }
+
+//        android("android") {
+//            publishLibraryVariants("release", "debug")
+//        }
 
 //        jvm("android")
 //        jvm()
@@ -85,14 +89,14 @@ kotlin {
         implementation(kotlin("test-annotations-common"))
     }
 
-    sourceSets["androidMain"].dependencies {
+    sourceSets["jvmMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
 
         // KTOR
 //        implementation("io.ktor:ktor-client-android:${BuildConfig.ktorVersion}")
     }
 
-    sourceSets["androidTest"].dependencies {
+    sourceSets["jvmTest"].dependencies {
         implementation(kotlin("test"))
         implementation(kotlin("test-junit"))
     }
