@@ -18,5 +18,6 @@ allprojects {
     repositories {
         jcenter()
         google()
+        maven { uri("https://dl.bintray.com/icerockdev/moko") }
     }
 }
