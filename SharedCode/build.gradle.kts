@@ -28,7 +28,7 @@ kotlin {
 
         implementation("co.touchlab:firestore:${BuildConfig.firebaseKmpVersion}")
         implementation("com.google.firebase:firebase-firestore:${BuildConfig.firebaseFirestoreVersion}")
-        implementation("com.google.firebase:firebase-core:17.0.1${BuildConfig.firebaseCoreVersion}")
+        implementation("com.google.firebase:firebase-core:${BuildConfig.firebaseCoreVersion}")
     }
 
     sourceSets["commonTest"].dependencies {
