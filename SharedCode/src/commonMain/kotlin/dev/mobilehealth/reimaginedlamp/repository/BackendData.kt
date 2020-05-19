@@ -1,7 +1,6 @@
 package dev.mobilehealth.reimaginedlamp.repository
 
 import com.benasher44.uuid.Uuid
-import com.soywiz.krypto.sha256
 import io.islandtime.Instant
 import io.islandtime.ZonedDateTime
 import io.islandtime.ranges.InstantInterval
@@ -20,7 +19,7 @@ data class DailyHealth(val combinedNonce: String, val ok: Boolean, val timestamp
         @ExperimentalStdlibApi
         fun create(sharedNonce: Uuid, userNonce: Uuid, ok: Boolean, timestamp: ZonedDateTime): DailyHealth {
             return DailyHealth(
-                "$sharedNonce|$userNonce".encodeToByteArray().sha256().base64,
+                "$sharedNonce|$userNonce".encodeToByteArray().toString(),
                 ok,
                 timestamp
             )
