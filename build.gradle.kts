@@ -18,6 +18,6 @@ allprojects {
     repositories {
         jcenter()
         google()
-        maven { uri("https://dl.bintray.com/icerockdev/moko") }
+        maven(url = "https://dl.bintray.com/icerockdev/moko")
     }
 }
