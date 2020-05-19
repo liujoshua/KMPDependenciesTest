@@ -54,7 +54,7 @@ kotlin {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
 
                 // cryptography
-                api("com.soywiz.korlibs.krypto:krypto:${BuildConfig.kryptoVersion}")
+//                api("com.soywiz.korlibs.krypto:krypto:${BuildConfig.kryptoVersion}")
 
                 // UUID
                 api("com.benasher44:uuid:${BuildConfig.benasherUuidVersion}")
@@ -62,7 +62,7 @@ kotlin {
                 // KTOR
 //                implementation("io.ktor:ktor-client-core:${BuildConfig.ktorVersion}")
                 // TIME
-                implementation("io.islandtime:core:${BuildConfig.islandTimeVersion}")
+//                implementation("io.islandtime:core:${BuildConfig.islandTimeVersion}")
 
             }
         }
@@ -91,7 +91,7 @@ kotlin {
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
 
         // KTOR
-        implementation("io.ktor:ktor-client-android:${BuildConfig.ktorVersion}")
+//        implementation("io.ktor:ktor-client-android:${BuildConfig.ktorVersion}")
     }
 
     sourceSets["androidTest"].dependencies {
@@ -103,7 +103,7 @@ kotlin {
         api("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.20.0")
 
         // KTOR
-        implementation("io.ktor:ktor-client-ios:${BuildConfig.ktorVersion}")
+//        implementation("io.ktor:ktor-client-ios:${BuildConfig.ktorVersion}")
     }
 }
 
