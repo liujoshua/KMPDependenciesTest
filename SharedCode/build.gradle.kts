@@ -13,7 +13,7 @@ android {
         minSdkVersion(21)
         targetSdkVersion(28)
     }
-    
+
     sourceSets {
         getByName("main") {
             manifest.srcFile("src/androidMain/AndroidManifest.xml")
@@ -58,16 +58,27 @@ kotlin {
         }
     }
 
-    sourceSets {
-        commonMain {
-            dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
+    sourceSets["commonMain"].dependencies {
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
 
-                implementation("com.soywiz.korlibs.krypto:krypto:${BuildConfig.kryptoVersion}")
-                api("com.benasher44:uuid:${BuildConfig.benasherUuidVersion}")
-                implementation("com.soywiz.korlibs.klock:klock:${BuildConfig.klockVersion}")
-            }
-        }
+        implementation("co.touchlab:firestore:${BuildConfig.firebaseKmpVersion}")
+        implementation("com.google.firebase:firebase-firestore:${BuildConfig.firebaseFirestoreVersion}")
+        implementation("com.google.firebase:firebase-core:${BuildConfig.firebaseCoreVersion}")
+
+        implementation("com.soywiz.korlibs.krypto:krypto:${BuildConfig.kryptoVersion}")
+        api("com.benasher44:uuid:${BuildConfig.benasherUuidVersion}")
+        implementation("com.soywiz.korlibs.klock:klock:${BuildConfig.klockVersion}")
+        // MOKO - MVVM
+        api("dev.icerock.moko:mvvm:${BuildConfig.mokkoMvvmVersion}")
+
+        implementation("com.github.aakira:napier:${BuildConfig.napierVersion}")
+
+        // COROUTINES
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:${BuildConfig.coroutineVersion}")
+
+        // COROUTINES
+//      implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${BuildConfig.coroutineVersion}")
+
     }
 
 
@@ -81,6 +92,9 @@ kotlin {
 
         // KTOR
 //        implementation("io.ktor:ktor-client-android:${BuildConfig.ktorVersion}")
+        implementation("com.github.aakira:napier-android:${BuildConfig.napierVersion}")
+
+        implementation("com.google.firebase:firebase-firestore:${BuildConfig.firestoreAndroid}")
     }
 
     sourceSets["androidTest"].dependencies {
@@ -90,7 +104,10 @@ kotlin {
 
     sourceSets["iosMain"].dependencies {
         api("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.20.0")
+        implementation("com.github.aakira:napier-ios:${BuildConfig.napierVersion}")
 
+        // COROUTINEdownload.jetbrains.com/kotlin/native/clang-llvm-apple-8.0.0-darwin-macos.tar.gz
+//        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:${BuildConfig.coroutineVersion}")
         // KTOR
 //        implementation("io.ktor:ktor-client-ios:${BuildConfig.ktorVersion}")
     }

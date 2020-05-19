@@ -9,3 +9,7 @@ expect object Platform {
 }
 
 fun hello(): String = "Hello from ${Platform.name()}"
+
+fun doIt() {
+
+}
