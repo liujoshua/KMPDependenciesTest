@@ -62,25 +62,12 @@ kotlin {
                 // KTOR
 //                implementation("io.ktor:ktor-client-core:${BuildConfig.ktorVersion}")
                 // TIME
-//                implementation("io.islandtime:core:${BuildConfig.islandTimeVersion}")
+                implementation("io.islandtime:core:${BuildConfig.islandTimeVersion}")
 
             }
         }
     }
 
-//
-//    sourceSets["commonMain"].dependencies {
-//        implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
-//
-//        // cryptography
-//        api("com.soywiz.korlibs.krypto:krypto:${BuildConfig.kryptoVersion}")
-//
-//        // UUID
-//        api("com.benasher44:uuid:${BuildConfig.benasherUuidVersion}")
-//
-//        // TIME
-//        implementation("io.islandtime:core:${BuildConfig.islandTimeVersion}")
-//    }
 
     sourceSets["commonTest"].dependencies {
         implementation(kotlin("test-common"))
