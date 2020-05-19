@@ -9,4 +9,5 @@ object BuildConfig {
     val kotlinVersion = "1.3.71"
 
     val mokkoMvvmVersion = "0.6.0"
+    val androidLifecycleVersion = "0.2.0"
 }

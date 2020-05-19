@@ -3,6 +3,31 @@ import dev.mobilehealth.reimaginedlamp.gradle.BuildConfig
 
 plugins {
     kotlin("multiplatform")
+    id("com.android.library")
+}
+
+android {
+
+    sourceSets {
+        main {
+            manifest.srcFile = "src/androidMain/AndroidManifest.xml"
+            java.srcDirs = ['src/androidMain/kotlin']
+            res.srcDirs = ['src/androidMain/res']
+        }
+        test {
+            java.srcDirs = ['src/androidTest/kotlin']
+            res.srcDirs = ['src/androidTest/res']
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+                targetCompatibility JavaVersion.VERSION_1_8
+    }
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+    }
 }
 
 kotlin {
@@ -37,6 +62,7 @@ kotlin {
 
     sourceSets["androidMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
+        implementation("androidx.lifecycle:lifecycle-extensions:${BuildConfig.androidLifecycleVersion}")
     }
 
     sourceSets["androidTest"].dependencies {
