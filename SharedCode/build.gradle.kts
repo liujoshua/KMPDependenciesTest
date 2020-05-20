@@ -13,7 +13,7 @@ android {
         minSdkVersion(21)
         targetSdkVersion(28)
     }
-
+    
     sourceSets {
         getByName("main") {
             manifest.srcFile("src/androidMain/AndroidManifest.xml")
@@ -32,13 +32,16 @@ android {
         }
     }
 }
-
 kotlin {
 
     targets {
         android("android") {
             publishLibraryVariants("release", "debug")
         }
+
+//        jvm("android")
+//        jvm()
+//        fromPreset(presets.android, "android")
     }
     //select iOS target platform depending on the Xcode environment variables
     val iOSTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
@@ -60,49 +63,25 @@ kotlin {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
 
-                // cryptography
-                api("com.soywiz.korlibs.krypto:krypto:${BuildConfig.kryptoVersion}")
-
-                // napier
-                implementation("com.github.aakira:napier:${BuildConfig.napierVersion}")
-                // UUID
-                api("com.benasher44:uuid:${BuildConfig.benasherUuidVersion}")
-                // MOKO - MVVM
-                api("dev.icerock.moko:mvvm:${BuildConfig.mokkoMvvmVersion}")
-                // KTOR
-//                implementation("io.ktor:ktor-client-core:${BuildConfig.ktorVersion}")
-                // TIME
-                implementation("com.soywiz.korlibs.klock:klock:${BuildConfig.klockVersion}")
+                implementation("io.islandtime:core:${BuildConfig.islandTimeVersion}")
 
             }
         }
-
     }
 
-//
-//    sourceSets["commonMain"].dependencies {
-//        implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
-//
-//        // cryptography
-//        api("com.soywiz.korlibs.krypto:krypto:${BuildConfig.kryptoVersion}")
-//
-//        // UUID
-//        api("com.benasher44:uuid:${BuildConfig.benasherUuidVersion}")
-//
-//        // TIME
-//        implementation("io.islandtime:core:${BuildConfig.islandTimeVersion}")
-//    }
 
     sourceSets["commonTest"].dependencies {
         implementation(kotlin("test-common"))
         implementation(kotlin("test-annotations-common"))
+
+        implementation("org.jetbrains.kotlinx:atomicfu-common:0.14.2")
     }
 
     sourceSets["androidMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
-        implementation("androidx.lifecycle:lifecycle-extensions:${BuildConfig.androidLifecycleVersion}")
 
-        implementation("com.github.aakira:napier-android:${BuildConfig.napierVersion}")
+        // KTOR
+//        implementation("io.ktor:ktor-client-android:${BuildConfig.ktorVersion}")
     }
 
     sourceSets["androidTest"].dependencies {
@@ -113,7 +92,6 @@ kotlin {
     sourceSets["iosMain"].dependencies {
         api("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.20.0")
 
-        implementation("com.github.aakira:napier-ios:${BuildConfig.napierVersion}")
         // KTOR
 //        implementation("io.ktor:ktor-client-ios:${BuildConfig.ktorVersion}")
     }
