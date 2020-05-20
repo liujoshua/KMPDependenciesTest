@@ -18,7 +18,7 @@ object BuildConfig {
     val kryptoVersion = "1.11.1"
 
     val mokkoMvvmVersion = "0.6.0"
-
+    val androidLifecycleVersion = "0.2.0"
     val firebaseKmpVersion = "0.2.7-mt2"
     val firebaseCoreVersion = "17.0.1"
     val firebaseFirestoreVersion = "20.1.0"
