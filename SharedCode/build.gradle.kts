@@ -3,9 +3,40 @@ import dev.mobilehealth.reimaginedlamp.gradle.BuildConfig
 
 plugins {
     kotlin("multiplatform")
+    id("com.android.library")
+}
+
+android {
+    compileSdkVersion(28)
+
+    defaultConfig {
+        minSdkVersion(21)
+        targetSdkVersion(28)
+    }
+
+    sourceSets {
+        getByName("main") {
+            manifest.srcFile("src/androidMain/AndroidManifest.xml")
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().all {
+
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+    }
 }
 
 kotlin {
+    android("android") {
+        publishLibraryVariants("release", "debug")
+    }
     //select iOS target platform depending on the Xcode environment variables
     val iOSTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
         if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
@@ -21,11 +52,11 @@ kotlin {
         }
     }
 
-    jvm("android")
-
     sourceSets["commonMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
 
+        // MOKO - MVVM
+        api("dev.icerock.moko:mvvm:${BuildConfig.mokkoMvvmVersion}")
     }
 
     sourceSets["commonTest"].dependencies {
@@ -35,6 +66,7 @@ kotlin {
 
     sourceSets["androidMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
+        implementation("androidx.lifecycle:lifecycle-extensions:${BuildConfig.androidLifecycleVersion}")
     }
 
     sourceSets["androidTest"].dependencies {
