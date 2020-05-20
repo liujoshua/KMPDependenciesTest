@@ -33,22 +33,6 @@ android {
     }
 }
 
-android {
-    compileSdkVersion(28)
-
-    defaultConfig {
-        minSdkVersion(21)
-        targetSdkVersion(28)
-    }
-
-
-    sourceSets {
-        getByName("main") {
-            manifest.srcFile("src/androidMain/AndroidManifest.xml")
-        }
-    }
-
-}
 kotlin {
 
     targets {
@@ -78,12 +62,12 @@ kotlin {
 
                 implementation("com.soywiz.korlibs.klock:klock:${BuildConfig.klockVersion}")
                 // cryptography
-//                api("com.soywiz.korlibs.krypto:krypto:${BuildConfig.kryptoVersion}")
+                api("com.soywiz.korlibs.krypto:krypto:${BuildConfig.kryptoVersion}")
 
                 // UUID
                 api("com.benasher44:uuid:${BuildConfig.benasherUuidVersion}")
-        // MOKO - MVVM
-        api("dev.icerock.moko:mvvm:${BuildConfig.mokkoMvvmVersion}")
+                // MOKO - MVVM
+                api("dev.icerock.moko:mvvm:${BuildConfig.mokkoMvvmVersion}")
                 // KTOR
 //                implementation("io.ktor:ktor-client-core:${BuildConfig.ktorVersion}")
                 // TIME
