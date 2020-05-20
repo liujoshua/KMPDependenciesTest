@@ -13,21 +13,17 @@ import co.touchlab.firebase.firestore.orderBy
 import co.touchlab.firebase.firestore.pendingWrites
 import com.benasher44.uuid.uuidFrom
 import com.github.aakira.napier.Napier
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
+import dev.icerock.moko.mvvm.livedata.LiveData
+import dev.icerock.moko.mvvm.livedata.MutableLiveData
 
 //expect suspend fun getNewNonceImpl(doc: DocumentReference, firestore: FirebaseFirestore): Response<Nonce>
 open class UserNonceRepository(val userId: String, val firestore: FirebaseFirestore) {
     val user_collection_key = "user"
     val user_collection_nonce_key = "nonce"
 
+    fun getNoncesLiveData(limit: Int): LiveData<List<Nonce>> {
+        val noncesLD = MutableLiveData(listOf<Nonce>())
 
-// TODO: get new nonce from server
-
-    @ExperimentalCoroutinesApi
-    fun getNonces(limit: Int): Flow<List<Nonce>> = callbackFlow {
         var subscription = firestore.collection(user_collection_key)
             .document(userId!!)
             .collection(user_collection_nonce_key)
@@ -50,8 +46,8 @@ open class UserNonceRepository(val userId: String, val firestore: FirebaseFirest
                         )
                     )
                 }
-                offer(dailyNonceList)
+                noncesLD.postValue(dailyNonceList)
             }
-        awaitClose { subscription.remove() }
+        return noncesLD
     }
 }
