@@ -7,23 +7,26 @@ plugins {
 }
 
 android {
+    compileSdkVersion(28)
+
+    defaultConfig {
+        minSdkVersion(21)
+        targetSdkVersion(28)
+    }
 
     sourceSets {
-        main {
-            manifest.srcFile = "src/androidMain/AndroidManifest.xml"
-            java.srcDirs = ['src/androidMain/kotlin']
-            res.srcDirs = ['src/androidMain/res']
-        }
-        test {
-            java.srcDirs = ['src/androidTest/kotlin']
-            res.srcDirs = ['src/androidTest/res']
+        getByName("main") {
+            manifest.srcFile("src/androidMain/AndroidManifest.xml")
         }
     }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-                targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
-    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().all {
+
         kotlinOptions {
             jvmTarget = "1.8"
         }
@@ -31,6 +34,9 @@ android {
 }
 
 kotlin {
+    android("android") {
+        publishLibraryVariants("release", "debug")
+    }
     //select iOS target platform depending on the Xcode environment variables
     val iOSTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
         if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
@@ -45,8 +51,6 @@ kotlin {
             }
         }
     }
-
-    jvm("android")
 
     sourceSets["commonMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
