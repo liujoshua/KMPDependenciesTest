@@ -4,7 +4,6 @@ import dev.mobilehealth.reimaginedlamp.gradle.BuildConfig
 plugins {
     id("com.android.library")
     kotlin("multiplatform")
-    id("com.android.library")
 }
 
 android {
