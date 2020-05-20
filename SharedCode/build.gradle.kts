@@ -75,10 +75,6 @@ kotlin {
 
         // COROUTINES
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:${BuildConfig.coroutineVersion}")
-
-        // COROUTINES
-//      implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${BuildConfig.coroutineVersion}")
-
     }
 
 
@@ -89,6 +85,9 @@ kotlin {
 
     sourceSets["androidMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
+
+        // coroutines
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${BuildConfig.coroutineVersion}")
 
         // KTOR
 //        implementation("io.ktor:ktor-client-android:${BuildConfig.ktorVersion}")
@@ -107,7 +106,7 @@ kotlin {
         implementation("com.github.aakira:napier-ios:${BuildConfig.napierVersion}")
 
         // COROUTINEdownload.jetbrains.com/kotlin/native/clang-llvm-apple-8.0.0-darwin-macos.tar.gz
-//        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:${BuildConfig.coroutineVersion}")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:${BuildConfig.coroutineVersion}")
         // KTOR
 //        implementation("io.ktor:ktor-client-ios:${BuildConfig.ktorVersion}")
     }
