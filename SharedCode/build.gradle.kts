@@ -4,6 +4,34 @@ import dev.mobilehealth.reimaginedlamp.gradle.BuildConfig
 plugins {
     id("com.android.library")
     kotlin("multiplatform")
+    id("com.android.library")
+}
+
+android {
+    compileSdkVersion(28)
+
+    defaultConfig {
+        minSdkVersion(21)
+        targetSdkVersion(28)
+    }
+
+    sourceSets {
+        getByName("main") {
+            manifest.srcFile("src/androidMain/AndroidManifest.xml")
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().all {
+
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+    }
 }
 
 android {
@@ -28,10 +56,6 @@ kotlin {
         android("android") {
             publishLibraryVariants("release", "debug")
         }
-
-//        jvm("android")
-//        jvm()
-//        fromPreset(presets.android, "android")
     }
     //select iOS target platform depending on the Xcode environment variables
     val iOSTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
@@ -59,7 +83,8 @@ kotlin {
 
                 // UUID
                 api("com.benasher44:uuid:${BuildConfig.benasherUuidVersion}")
-
+        // MOKO - MVVM
+        api("dev.icerock.moko:mvvm:${BuildConfig.mokkoMvvmVersion}")
                 // KTOR
 //                implementation("io.ktor:ktor-client-core:${BuildConfig.ktorVersion}")
                 // TIME
@@ -67,6 +92,7 @@ kotlin {
 
             }
         }
+
     }
 
 //
@@ -90,9 +116,8 @@ kotlin {
 
     sourceSets["androidMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
+        implementation("androidx.lifecycle:lifecycle-extensions:${BuildConfig.androidLifecycleVersion}")
 
-        // KTOR
-//        implementation("io.ktor:ktor-client-android:${BuildConfig.ktorVersion}")
     }
 
     sourceSets["androidTest"].dependencies {
