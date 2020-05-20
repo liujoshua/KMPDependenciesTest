@@ -15,6 +15,13 @@ jobs:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 1
+    - name: Gradle wrapper cache
+      uses: actions/cache@v1
+      with:
+        path: ~/.gradle/wrapper/dists
+        key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('gradle/wrapper/*') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-wrapper-
     - name: Gradle cache
       uses: actions/cache@v1
       with:
