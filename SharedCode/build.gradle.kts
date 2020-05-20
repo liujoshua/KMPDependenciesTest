@@ -130,12 +130,14 @@ kotlin {
 
     sourceSets["iosMain"].dependencies {
         api("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.20.0")
+
         implementation("com.github.aakira:napier-ios:${BuildConfig.napierVersion}")
 
         // COROUTINEdownload.jetbrains.com/kotlin/native/clang-llvm-apple-8.0.0-darwin-macos.tar.gz
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:${BuildConfig.coroutineVersion}")
         // KTOR
 //        implementation("io.ktor:ktor-client-ios:${BuildConfig.ktorVersion}")
+
     }
 }
 

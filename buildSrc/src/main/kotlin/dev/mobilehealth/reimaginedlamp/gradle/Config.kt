@@ -1,3 +1,4 @@
+
 package dev.mobilehealth.reimaginedlamp.gradle
 
 object BuildConfig {
@@ -28,4 +29,5 @@ object BuildConfig {
     val napierVersion = "1.3.0"
 
     val coroutineVersion = "1.3.5-native-mt"
+
 }
