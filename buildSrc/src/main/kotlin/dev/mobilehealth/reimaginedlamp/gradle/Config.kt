@@ -19,7 +19,7 @@ object BuildConfig {
 
     val mokkoMvvmVersion = "0.6.0"
 
-    val firebaseKmpVersion = "0.2.6"
+    val firebaseKmpVersion = "0.2.7-mt2"
     val firebaseCoreVersion = "17.0.1"
     val firebaseFirestoreVersion = "20.1.0"
 
