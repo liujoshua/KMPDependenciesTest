@@ -1,4 +1,5 @@
 package sample
+
 import com.benasher44.uuid.uuid4
 import com.soywiz.klock.DateFormat
 import com.soywiz.klock.DateTime
@@ -22,8 +23,8 @@ fun sayUuid(): String {
 
 fun sayDate(): String {
     return DateTime.now().toString(DateFormat.FORMAT1)
+}
 
-fun getHelloLiveData():LiveData<String> {
+fun getHelloLiveData(): LiveData<String> {
     return MutableLiveData(hello())
-
 }
