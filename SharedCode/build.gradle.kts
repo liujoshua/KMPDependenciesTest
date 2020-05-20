@@ -2,8 +2,8 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import dev.mobilehealth.reimaginedlamp.gradle.BuildConfig
 
 plugins {
-    kotlin("multiplatform")
     id("com.android.library")
+    kotlin("multiplatform")
 }
 
 android {
@@ -33,9 +33,28 @@ android {
     }
 }
 
+android {
+    compileSdkVersion(28)
+
+    defaultConfig {
+        minSdkVersion(21)
+        targetSdkVersion(28)
+    }
+
+
+    sourceSets {
+        getByName("main") {
+            manifest.srcFile("src/androidMain/AndroidManifest.xml")
+        }
+    }
+
+}
 kotlin {
-    android("android") {
-        publishLibraryVariants("release", "debug")
+
+    targets {
+        android("android") {
+            publishLibraryVariants("release", "debug")
+        }
     }
     //select iOS target platform depending on the Xcode environment variables
     val iOSTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
@@ -52,12 +71,42 @@ kotlin {
         }
     }
 
-    sourceSets["commonMain"].dependencies {
-        implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
 
+                implementation("com.soywiz.korlibs.klock:klock:${BuildConfig.klockVersion}")
+                // cryptography
+//                api("com.soywiz.korlibs.krypto:krypto:${BuildConfig.kryptoVersion}")
+
+                // UUID
+                api("com.benasher44:uuid:${BuildConfig.benasherUuidVersion}")
         // MOKO - MVVM
         api("dev.icerock.moko:mvvm:${BuildConfig.mokkoMvvmVersion}")
+                // KTOR
+//                implementation("io.ktor:ktor-client-core:${BuildConfig.ktorVersion}")
+                // TIME
+//                implementation("io.islandtime:core:${BuildConfig.islandTimeVersion}")
+
+            }
+        }
+
     }
+
+//
+//    sourceSets["commonMain"].dependencies {
+//        implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
+//
+//        // cryptography
+//        api("com.soywiz.korlibs.krypto:krypto:${BuildConfig.kryptoVersion}")
+//
+//        // UUID
+//        api("com.benasher44:uuid:${BuildConfig.benasherUuidVersion}")
+//
+//        // TIME
+//        implementation("io.islandtime:core:${BuildConfig.islandTimeVersion}")
+//    }
 
     sourceSets["commonTest"].dependencies {
         implementation(kotlin("test-common"))
@@ -67,6 +116,7 @@ kotlin {
     sourceSets["androidMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
         implementation("androidx.lifecycle:lifecycle-extensions:${BuildConfig.androidLifecycleVersion}")
+
     }
 
     sourceSets["androidTest"].dependencies {
@@ -76,6 +126,9 @@ kotlin {
 
     sourceSets["iosMain"].dependencies {
         api("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.20.0")
+
+        // KTOR
+//        implementation("io.ktor:ktor-client-ios:${BuildConfig.ktorVersion}")
     }
 }
 
@@ -85,6 +138,7 @@ val packForXcode by tasks.creating(Sync::class) {
     /// selecting the right configuration for the iOS 
     /// framework depending on the environment
     /// variables set by Xcode build
+    // or XCODE_CONFIGURATION
     val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
     val framework = kotlin.targets
         .getByName<KotlinNativeTarget>("ios")
