@@ -22,6 +22,5 @@ jobs:
 #         FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
 #       run: echo $FIREBASE_CONFIG > AndroidApp/google-services.json
     - name: Build 
-      run: ./gradlew build
-    - name: Pack for xCode
-      run: ./gradlew packForXCode
+      run: ./gradlew build -x lint -x lintVitalRelease
+
