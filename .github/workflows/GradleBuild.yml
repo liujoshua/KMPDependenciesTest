@@ -19,9 +19,9 @@ jobs:
       uses: actions/cache@v1
       with:
         path: ~/.gradle/wrapper/dists
-        key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('gradle/wrapper/*') }}
+        key: ${{ runner.os }}-gradlewrapper-${{ hashFiles('gradle/wrapper/*') }}
         restore-keys: |
-          ${{ runner.os }}-gradle-wrapper-
+          ${{ runner.os }}-gradlewrapper-
     - name: Gradle cache
       uses: actions/cache@v1
       with:
