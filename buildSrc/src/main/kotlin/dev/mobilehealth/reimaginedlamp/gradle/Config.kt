@@ -1,4 +1,3 @@
-
 package dev.mobilehealth.reimaginedlamp.gradle
 
 object BuildConfig {
@@ -20,5 +19,5 @@ object BuildConfig {
     val kryptoVersion = "1.11.1"
     val mokkoMvvmVersion = "0.6.0"
     val androidLifecycleVersion = "0.2.0"
-
+    val napierVersion = "1.3.0"
 }

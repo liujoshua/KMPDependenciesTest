@@ -60,10 +60,11 @@ kotlin {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
 
-                implementation("com.soywiz.korlibs.klock:klock:${BuildConfig.klockVersion}")
                 // cryptography
                 api("com.soywiz.korlibs.krypto:krypto:${BuildConfig.kryptoVersion}")
 
+                // napier
+                implementation("com.github.aakira:napier:${BuildConfig.napierVersion}")
                 // UUID
                 api("com.benasher44:uuid:${BuildConfig.benasherUuidVersion}")
                 // MOKO - MVVM
@@ -71,7 +72,7 @@ kotlin {
                 // KTOR
 //                implementation("io.ktor:ktor-client-core:${BuildConfig.ktorVersion}")
                 // TIME
-//                implementation("io.islandtime:core:${BuildConfig.islandTimeVersion}")
+                implementation("com.soywiz.korlibs.klock:klock:${BuildConfig.klockVersion}")
 
             }
         }
@@ -101,6 +102,7 @@ kotlin {
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
         implementation("androidx.lifecycle:lifecycle-extensions:${BuildConfig.androidLifecycleVersion}")
 
+        implementation("com.github.aakira:napier-android:${BuildConfig.napierVersion}")
     }
 
     sourceSets["androidTest"].dependencies {
@@ -111,6 +113,7 @@ kotlin {
     sourceSets["iosMain"].dependencies {
         api("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.20.0")
 
+        implementation("com.github.aakira:napier-ios:${BuildConfig.napierVersion}")
         // KTOR
 //        implementation("io.ktor:ktor-client-ios:${BuildConfig.ktorVersion}")
     }
