@@ -44,12 +44,12 @@ kotlin {
 
     val buildForDevice = project.findProperty("kotlin.native.cocoapods.target") == "ios_arm"
     if (buildForDevice) {
-        iosArm64("ios64")
-        iosArm32("ios32")
+        iosArm64("ios")
+//        iosArm32("ios32")
 
-        val iOSMain by sourceSets.creating
-        sourceSets["ios64Main"].dependsOn(iOSMain)
-        sourceSets["ios32Main"].dependsOn(iOSMain)
+//        val iOSMain by sourceSets.creating
+//        sourceSets["iosMain"].dependsOn(iOSMain)
+//        sourceSets["ios32Main"].dependsOn(iOSMain)
     } else {
         iosX64("ios")
     }
@@ -137,7 +137,6 @@ kotlin {
     cocoapods {
         summary = "Working with cocoapods"
         homepage = "https://github.com/liujoshua/reimagined-lamp"
-        pod("SharedCode", "~> 3.2.0")
     }
 }
 
