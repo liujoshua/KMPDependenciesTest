@@ -1,7 +1,23 @@
-use_frameworks!
+
 
 platform :ios, '9.0'
 
 target 'iosApp' do
+    use_frameworks!
+  
     pod 'SharedCode', :path => '../SharedCode'
+
+    pod 'MaterialComponents/Buttons', '109.4.0'
+    pod 'MaterialComponents/Buttons+Theming', '109.4.0'
+
+    pod 'MaterialComponents/BottomNavigation', '109.4.0'
+    pod 'MaterialComponents/BottomNavigation+Theming', '109.4.0'
+
+    pod 'MaterialComponents/Dialogs', '109.4.0'
+    pod 'MaterialComponents/Dialogs+Theming', '109.4.0'
+
+    pod 'MaterialComponents/List', '109.4.0'
+    pod 'MaterialComponents/List+Theming', '109.4.0'
+
+    pod 'MaterialComponents/schemes/Color', '109.4.0'
 end
