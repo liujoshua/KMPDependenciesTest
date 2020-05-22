@@ -1,0 +1,9 @@
+
+apply plugin: "org.jetbrains.kotlin.native.cocoapods"
+
+kotlin {
+    cocoapods {
+        summary = "Working with cocoapods"
+        homepage = "https://github.com/liujoshua/reimagined-lamp"
+    }
+}
