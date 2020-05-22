@@ -13,6 +13,45 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        fetch-depth: 1
+    - name: Gradle wrapper cache
+      uses: actions/cache@v1
+      with:
+        path: ~/.gradle/wrapper/dists
+        key: ${{ runner.os }}-gradlewrapper-${{ hashFiles('gradle/wrapper/*') }}
+        restore-keys: |
+          ${{ runner.os }}-gradlewrapper-
+    - name: konan cache
+      uses: actions/cache@v1
+      with:
+        path: ~/.konan/
+        key: ${{ runner.os }}-konan-${{ hashFiles('buildSrc/*') }}
+        restore-keys: |
+          ${{ runner.os }}-konan-
+    - name: Gradle dependencies jars
+      uses: actions/cache@v1
+      with:
+        path: ~/.gradle/caches/jars-3
+        key: ${{ runner.os }}-gradlejars-${{ hashFiles('buildSrc/*') }}
+        restore-keys: |
+          ${{ runner.os }}-gradlejars-
+    - name: Gradle dependencies modules
+      uses: actions/cache@v1
+      with:
+        path: ~/.gradle/caches/modules-2
+        key: ${{ runner.os }}-gradlemodules-${{ hashFiles('buildSrc/*') }}
+        restore-keys: |
+          ${{ runner.os }}-gradlemodules-
+
+    - name: Gradle build cache
+      uses: actions/cache@v1
+      with:
+        path: ~/.gradle/caches/build-cache-i
+        key: ${{ runner.os }}-gradlebuildcache-${{ github.ref }}-${{ hashFiles('**/*.gradle*') }}
+        restore-keys: |
+          ${{ runner.os }}-gradlebuildcache-
+
     - name: set up JDK 1.8
       uses: actions/setup-java@v1
       with:
@@ -21,7 +60,6 @@ jobs:
 #       env:
 #         FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
 #       run: echo $FIREBASE_CONFIG > AndroidApp/google-services.json
-    - name: Build 
-      run: ./gradlew build
-    - name: Pack for xCode
-      run: ./gradlew packForXCode
+    - name: Build
+      run: ./gradlew build -x lint -x lintVitalRelease
+

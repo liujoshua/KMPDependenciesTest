@@ -2,33 +2,137 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import dev.mobilehealth.reimaginedlamp.gradle.BuildConfig
 
 plugins {
+    id("com.android.library")
     kotlin("multiplatform")
 }
 
-kotlin {
-    //select iOS target platform depending on the Xcode environment variables
-    val iOSTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
-        if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
-            ::iosArm64
-        else
-            ::iosX64
+val isXcodeBuild = (System.getenv("SDK_NAME") != null)
 
-    iOSTarget("ios") {
-        binaries {
-            framework {
-                baseName = "SharedCode"
+// the native.cocoapods plugin only builds from xcode
+// apply plugin if running from xcode
+// however, it is required in order to run podspec task
+// allows running of podspec from command line by conditionally applying plugin
+if (isXcodeBuild || project.gradle.startParameter.taskNames.contains("podspec")) {
+    apply(plugin = "org.jetbrains.kotlin.native.cocoapods")
+}
+
+val hasCocoapodsPlugin =
+    (plugins.findPlugin("org.jetbrains.kotlin.native.cocoapods") != null)
+
+//if (tasks.findByName("podspec") != null) {
+//    apply(from = "cocoapods.gradle")
+//
+//}
+
+tasks.findByName("podspec")?.let {
+    println("Configuring podspec")
+    apply(from = "./cocoapodsconfig.gradle")
+//    if (isXcodeBuild) {
+//        tasks.getByName("buildSrc").dependsOn(it)
+//    }
+}
+
+android {
+    compileSdkVersion(28)
+
+    defaultConfig {
+        minSdkVersion(21)
+        targetSdkVersion(28)
+    }
+
+    sourceSets {
+        getByName("main") {
+            manifest.srcFile("src/androidMain/AndroidManifest.xml")
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().all {
+
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+    }
+}
+
+kotlin {
+
+    targets {
+        android("android") {
+            publishLibraryVariants("release", "debug")
+        }
+    }
+
+    if (hasCocoapodsPlugin) {
+        val buildForDevice = project.findProperty("kotlin.native.cocoapods.target") == "ios_arm"
+        if (buildForDevice) {
+            iosArm64("ios64")
+            iosArm32("ios32")
+
+            val iOSMain by sourceSets.creating
+            sourceSets["ios64Main"].dependsOn(iOSMain)
+            sourceSets["ios32Main"].dependsOn(iOSMain)
+        } else {
+            iosX64("ios")
+        }
+    } else {
+        // select iOS target platform depending on the Xcode environment variables
+        val iOSTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
+            if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
+                ::iosArm64
+            else
+                ::iosX64
+
+        iOSTarget("ios") {
+            binaries {
+                framework {
+                    baseName = "SharedCode"
+                }
             }
         }
     }
 
-    jvm("android")
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
 
-    sourceSets["commonMain"].dependencies {
-        implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
+                // cryptography
+                api("com.soywiz.korlibs.krypto:krypto:${BuildConfig.kryptoVersion}")
 
-        // KTOR
-        implementation("io.ktor:ktor-client-core:${BuildConfig.ktorVersion}")
+                // napier
+                implementation("com.github.aakira:napier:${BuildConfig.napierVersion}")
+                // UUID
+                api("com.benasher44:uuid:${BuildConfig.benasherUuidVersion}")
+                // MOKO - MVVM
+                api("dev.icerock.moko:mvvm:${BuildConfig.mokkoMvvmVersion}")
+                // KTOR
+//                implementation("io.ktor:ktor-client-core:${BuildConfig.ktorVersion}")
+                // TIME
+                implementation("com.soywiz.korlibs.klock:klock:${BuildConfig.klockVersion}")
+
+            }
+        }
+
     }
+
+//
+//    sourceSets["commonMain"].dependencies {
+//        implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
+//
+//        // cryptography
+//        api("com.soywiz.korlibs.krypto:krypto:${BuildConfig.kryptoVersion}")
+//
+//        // UUID
+//        api("com.benasher44:uuid:${BuildConfig.benasherUuidVersion}")
+//
+//        // TIME
+//        implementation("io.islandtime:core:${BuildConfig.islandTimeVersion}")
+//    }
 
     sourceSets["commonTest"].dependencies {
         implementation(kotlin("test-common"))
@@ -37,9 +141,9 @@ kotlin {
 
     sourceSets["androidMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
+        implementation("androidx.lifecycle:lifecycle-extensions:${BuildConfig.androidLifecycleVersion}")
 
-        // KTOR
-        implementation("io.ktor:ktor-client-android:${BuildConfig.ktorVersion}")
+        implementation("com.github.aakira:napier-android:${BuildConfig.napierVersion}")
     }
 
     sourceSets["androidTest"].dependencies {
@@ -48,40 +152,49 @@ kotlin {
     }
 
     sourceSets["iosMain"].dependencies {
-        api( "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.20.0")
+        api("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.20.0")
 
+        implementation("com.github.aakira:napier-ios:${BuildConfig.napierVersion}")
         // KTOR
-        implementation("io.ktor:ktor-client-ios:${BuildConfig.ktorVersion}")
+//        implementation("io.ktor:ktor-client-ios:${BuildConfig.ktorVersion}")
     }
+
+
 }
 
-val packForXcode by tasks.creating(Sync::class) {
-    val targetDir = File(buildDir, "xcode-frameworks")
+if (!isXcodeBuild) {
+    //
+    val packForXcode by tasks.creating(Sync::class) {
+        val targetDir = File(buildDir, "xcode-frameworks")
 
-    /// selecting the right configuration for the iOS 
-    /// framework depending on the environment
-    /// variables set by Xcode build
-    val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
-    val framework = kotlin.targets
-        .getByName<KotlinNativeTarget>("ios")
-        .binaries.getFramework(mode)
-    inputs.property("mode", mode)
-    dependsOn(framework.linkTask)
+        /// selecting the right configuration for the iOS
+        /// framework depending on the environment
+        /// variables set by Xcode build
+        // or XCODE_CONFIGURATION
+        val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
+        val framework = kotlin.targets
+            .getByName<KotlinNativeTarget>("ios")
+            .binaries.getFramework(mode)
+        inputs.property("mode", mode)
+        dependsOn(framework.linkTask)
 
-    from({ framework.outputDirectory })
-    into(targetDir)
+        from({ framework.outputDirectory })
+        into(targetDir)
 
-    /// generate a helpful ./gradlew wrapper with embedded Java path
-    doLast {
-        val gradlew = File(targetDir, "gradlew")
-        gradlew.writeText(
-            "#!/bin/bash\n"
-                    + "export 'JAVA_HOME=${System.getProperty("java.home")}'\n"
-                    + "cd '${rootProject.rootDir}'\n"
-                    + "./gradlew \$@\n"
-        )
-        gradlew.setExecutable(true)
+        /// generate a helpful ./gradlew wrapper with embedded Java path
+        doLast {
+            val gradlew = File(targetDir, "gradlew")
+            gradlew.writeText(
+                "#!/bin/bash\n"
+                        + "export 'JAVA_HOME=${System.getProperty("java.home")}'\n"
+                        + "cd '${rootProject.rootDir}'\n"
+                        + "./gradlew \$@\n"
+            )
+            gradlew.setExecutable(true)
+        }
     }
+
+    tasks.getByName("build").dependsOn(packForXcode)
+
 }
 
-tasks.getByName("build").dependsOn(packForXcode)
