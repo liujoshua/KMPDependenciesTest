@@ -111,7 +111,7 @@ kotlin {
                 // MOKO - MVVM
                 api("dev.icerock.moko:mvvm:${BuildConfig.mokkoMvvmVersion}")
                 // KTOR
-//                implementation("io.ktor:ktor-client-core:${BuildConfig.ktorVersion}")
+                implementation("io.ktor:ktor-client-core:${BuildConfig.ktorVersion}")
                 // TIME
                 implementation("com.soywiz.korlibs.klock:klock:${BuildConfig.klockVersion}")
 
@@ -144,6 +144,9 @@ kotlin {
         implementation("androidx.lifecycle:lifecycle-extensions:${BuildConfig.androidLifecycleVersion}")
 
         implementation("com.github.aakira:napier-android:${BuildConfig.napierVersion}")
+
+        // KTOR
+        implementation("io.ktor:ktor-client-android:${BuildConfig.ktorVersion}")
     }
 
     sourceSets["androidTest"].dependencies {
@@ -156,7 +159,7 @@ kotlin {
 
         implementation("com.github.aakira:napier-ios:${BuildConfig.napierVersion}")
         // KTOR
-//        implementation("io.ktor:ktor-client-ios:${BuildConfig.ktorVersion}")
+        implementation("io.ktor:ktor-client-ios:${BuildConfig.ktorVersion}")
     }
 
 
